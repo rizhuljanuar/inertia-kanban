@@ -14,9 +14,11 @@ class BoardController extends Controller
         ]);
     }
 
-    public function show()
+    public function show(Board $board)
     {
-        return inertia('Board');
+        return inertia('Board', [
+            'board' => $board
+        ]);
     }
 
     public function store()
@@ -29,6 +31,17 @@ class BoardController extends Controller
             'user_id' => auth()->id(),
             'name' => request('name')
         ]);
+
+        return redirect()->back();
+    }
+
+    public function update(Board $board)
+    {
+        request()->validate([
+            'name' => ['required']
+        ]);
+
+        $board->update(['name' => request('name')]);
 
         return redirect()->back();
     }

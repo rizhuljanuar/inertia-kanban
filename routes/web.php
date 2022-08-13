@@ -16,9 +16,10 @@ use Inertia\Inertia;
 */
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('/board', [\App\Http\Controllers\BoardController::class, 'show'])->name('boards.show');
     Route::get('/boards', [\App\Http\Controllers\BoardController::class, 'index'])->name('boards');
+    Route::get('/boards/{board}', [\App\Http\Controllers\BoardController::class, 'show'])->name('boards.show');
     Route::post('/boards', [\App\Http\Controllers\BoardController::class, 'store'])->name('boards.store');
+    Route::put('/boards/{board}', [\App\Http\Controllers\BoardController::class, 'update'])->name('boards.update');
 });
 
 Route::get('/', function () {

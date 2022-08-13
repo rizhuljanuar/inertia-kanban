@@ -1,3 +1,33 @@
+<script setup>
+import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { Head, InertiaLink, useForm } from "@inertiajs/inertia-vue3";
+import { PlusIcon } from "@heroicons/vue/solid";
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  PopoverOverlay,
+} from "@headlessui/vue";
+import { ChevronDownIcon } from "@heroicons/vue/solid";
+
+const props = defineProps({
+  boards: Array,
+});
+
+const form = useForm({
+  name: "",
+});
+
+function onSubmit(closePopever) {
+  form.post(route("boards.store"), {
+    onSuccess: () => {
+      form.reset();
+      closePopever();
+    },
+  });
+}
+</script>
+
 <template>
   <Head title="Boards" />
 
@@ -134,7 +164,7 @@
           >
             <InertiaLink
               class="absolute inset-0 p-3 text-lg font-bold text-white"
-              :href="route('boards.show')"
+              :href="route('boards.show', { board: board.id })"
             >
               {{ board.name }}
             </InertiaLink>
@@ -144,33 +174,3 @@
     </div>
   </BreezeAuthenticatedLayout>
 </template>
-
-<script setup>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head, InertiaLink, useForm } from "@inertiajs/inertia-vue3";
-import { PlusIcon } from "@heroicons/vue/solid";
-import {
-  Popover,
-  PopoverButton,
-  PopoverPanel,
-  PopoverOverlay,
-} from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/solid";
-
-const props = defineProps({
-  boards: Array,
-});
-
-const form = useForm({
-  name: "",
-});
-
-function onSubmit(closePopever) {
-  form.post(route("boards.store"), {
-    onSuccess: () => {
-      form.reset();
-      closePopever();
-    },
-  });
-}
-</script>

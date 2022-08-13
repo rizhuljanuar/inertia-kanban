@@ -1,8 +1,19 @@
+<script setup>
+import { DotsHorizontalIcon, PencilIcon, PlusIcon } from "@heroicons/vue/solid";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import Authenticated from "@/Layouts/Authenticated.vue";
+import BoardNameForm from "@/Components/BoardNameForm.vue";
+
+const props = defineProps({
+  board: Object,
+});
+</script>
+
 <template>
   <Authenticated>
     <div class="flex flex-col h-full bg-blue-500">
-      <div class="shrink-0 flex justify-between items-center p-4">
-        <h1 class="text-2xl text-white font-bold">Board title</h1>
+      <div class="shrink-0 flex flex-wrap justify-between items-center p-4">
+        <BoardNameForm :board="board" />
         <div>
           <button
             class="
@@ -200,12 +211,6 @@
     </div>
   </Authenticated>
 </template>
-
-<script setup>
-import { DotsHorizontalIcon, PencilIcon, PlusIcon } from "@heroicons/vue/solid";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import Authenticated from "@/Layouts/Authenticated.vue";
-</script>
 
 <style scoped>
 </style>
