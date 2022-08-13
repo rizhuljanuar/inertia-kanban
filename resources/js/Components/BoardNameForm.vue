@@ -11,28 +11,14 @@ const form = useForm({
   name: props.board.name,
 });
 
-const heading = ref();
 const input = ref();
 
 const isEditing = ref(false);
-
-function resize() {
-  input.value.style.width = `${heading.value.offsetWidth + 2}px`;
-}
-
-watch(
-  () => form.name,
-  async () => {
-    await nextTick();
-    resize();
-  }
-);
 
 async function edit() {
   isEditing.value = true;
   await nextTick();
   input.value.select();
-  resize();
 }
 
 function onSubmit() {
@@ -45,21 +31,22 @@ function onSubmit() {
 </script>
 
 <template>
-  <div class="flex flex-col items-start max-w-full">
+  <div class="flex flex-col items-start max-w-full relative">
     <h1
       @click="edit()"
-      :class="[isEditing ? 'absolute -left-[1000rem]' : '']"
-      ref="heading"
+      :class="[isEditing ? 'invisible' : '']"
       class="
         hover:bg-white/20
-        whitespace-pre-wrap
-        break-all
+        whitespace-pre
+        w-full
+        overflow-hidden
+        text-ellipsis
         rounded-md
         border border-transparent
         cursor-pointer
         px-3
         py-1.5
-        text-2xl text-white
+        text-white
         font-bold
       "
     >
@@ -76,7 +63,9 @@ function onSubmit() {
         v-model="form.name"
         type="text"
         class="
-          text-2xl
+          absolute
+          inset-0
+          text-xl
           max-w-full
           form-bold
           placeholder-gray-400
