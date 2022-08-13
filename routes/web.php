@@ -15,9 +15,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/board', function () {
-  return Inertia::render('Board');
-})->middleware('auth');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/boards', [\App\Http\Controllers\BoardController::class, 'index'])->name('boards');
+    Route::get('/board', [\App\Http\Controllers\BoardControllers::class, 'show'])->name('boards.show');
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,8 +29,4 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
