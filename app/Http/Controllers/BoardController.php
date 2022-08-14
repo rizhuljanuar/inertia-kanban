@@ -9,16 +9,16 @@ class BoardController extends Controller
 {
     public function index()
     {
-        return inertia('Boards', [
+        return inertia('Boards/Index', [
             'boards' => auth()->user()->boards
         ]);
     }
 
     public function show(Board $board)
     {
-        $board->load('lists');
+        $board->load('lists.cards');
 
-        return inertia('Board', [
+        return inertia('Boards/Show', [
             'board' => $board
         ]);
     }

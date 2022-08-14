@@ -22,7 +22,7 @@ async function showForm() {
 }
 
 function onSubmit() {
-  form.post(route("boardLists.store", { board: props.board.id }), {
+  form.post(route("cardLists.store", { board: props.board.id }), {
     onSuccess: () => {
       form.reset();
       inputNameRef.value.focus();
@@ -34,6 +34,7 @@ function onSubmit() {
 
 <template>
   <form
+    @keydown.esc="isShowingForm = false"
     ref="formRef"
     v-if="isShowingForm"
     @submit.prevent="onSubmit()"

@@ -20,6 +20,6 @@ class Board extends Model
 
     public function lists(): HasMany
     {
-        return $this->hasMany(BoardList::class);
+        return $this->hasMany(CardList::class);
     }
 }
