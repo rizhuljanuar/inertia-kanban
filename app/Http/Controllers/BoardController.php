@@ -16,6 +16,8 @@ class BoardController extends Controller
 
     public function show(Board $board)
     {
+        $board->load('lists');
+
         return inertia('Board', [
             'board' => $board
         ]);
