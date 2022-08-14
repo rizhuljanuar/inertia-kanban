@@ -1,15 +1,18 @@
 <script setup>
+import { store } from "@/store";
 import { PlusIcon } from "@heroicons/vue/solid";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "@vue/reactivity";
-import { nextTick } from "@vue/runtime-core";
+import { computed, nextTick } from "@vue/runtime-core";
 
 const props = defineProps({
   list: Object,
 });
 
 const emit = defineEmits(["created"]);
-const isShowingForm = ref(false);
+const isShowingForm = computed(
+  () => props.list.id === store.value.listCreatingCardId
+);
 const inputNameRef = ref();
 const form = useForm({
   title: "",
@@ -18,7 +21,7 @@ const form = useForm({
 });
 
 async function showForm() {
-  isShowingForm.value = true;
+  store.value.listCreatingCardId = props.list.id;
   await nextTick();
   inputNameRef.value.focus();
 }
@@ -36,7 +39,7 @@ function onSubmit() {
 
 <template>
   <form
-    @keydown.esc="isShowingForm = false"
+    @keydown.esc="store.listCreatingCardId = null"
     v-if="isShowingForm"
     @submit.prevent="onSubmit()"
   >
@@ -81,7 +84,7 @@ function onSubmit() {
       </button>
       <button
         type="button"
-        @click="isShowingForm = false"
+        @click="store.listCreatingCardId = null"
         class="
           px-4
           py-2

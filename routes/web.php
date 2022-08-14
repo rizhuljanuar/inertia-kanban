@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::post('/boards/{board}/list', [\App\Http\Controllers\CardListController::class, 'store'])->name('cardLists.store');
     Route::post('/cards', [\App\Http\Controllers\CardController::class, 'store'])->name('cards.store');
+    Route::put('/cards/{card}', [\App\Http\Controllers\CardController::class, 'update'])->name('cards.update');
 });
 
 Route::get('/', function () {
